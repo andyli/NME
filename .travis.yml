@@ -1,14 +1,15 @@
-language: node_js
-node_js:
-  - 0.6
+language: java
+jdk: oraclejdk7
 # env:
 #   - "NME_UNIT_TEST=html5"
 #   - "NME_UNIT_TEST=cross"
 before_install:
-  - sudo apt-get install python-software-properties -y # for the next command
+  - sudo apt-get install python-software-properties -y # for add-apt-repository
   - sudo add-apt-repository ppa:eyecreate/haxe -y
+  - sudo add-apt-repository ppa:chris-lea/node.js -y
   - sudo apt-get update
   - sudo apt-get install haxe -y
+  - sudo apt-get install nodejs phantomjs -y # for JS
   - sudo apt-get install gcc-multilib g++-multilib -y  # since VM is 64bit but hxcpp builds 32bit by default
   - sudo apt-get install mesa-common-dev libgl1-mesa-dev libglu1-mesa-dev -y # for nme
   - mkdir ~/haxelib
@@ -33,6 +34,7 @@ before_install:
   - mkdir bin
 
 before_script:
+  - npm install
   - make clean all -C tools/smoke.jeash.com
   - "cd tools/smoke.jeash.com && node webserver.js &"
 
